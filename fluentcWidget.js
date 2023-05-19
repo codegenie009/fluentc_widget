@@ -209,7 +209,7 @@ var fluentcWidget = function () {
     key: "setupWidget",
     value: function () {
       var _setupWidget = _asyncToGenerator(_regeneratorRuntime().mark(function _callee(elementID) {
-        var element;
+        var element, initRes;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
@@ -237,6 +237,13 @@ var fluentcWidget = function () {
               _context.next = 11;
               return this.loadInitial();
             case 11:
+              initRes = _context.sent;
+              if (initRes) {
+                _context.next = 14;
+                break;
+              }
+              return _context.abrupt("return");
+            case 14:
               this.element = element;
               this.treeSelector = new _treeSelector.TreeSelector(this.config);
               this.setupStyle();
@@ -247,7 +254,7 @@ var fluentcWidget = function () {
               }
               this.setupManagePanel();
               this.isSetupFinished = true;
-            case 17:
+            case 20:
             case "end":
               return _context.stop();
           }
@@ -549,14 +556,14 @@ var fluentcWidget = function () {
                 _context5.next = 2;
                 break;
               }
-              return _context5.abrupt("return");
+              return _context5.abrupt("return", true);
             case 2:
               if ((_this$options = this.options) !== null && _this$options !== void 0 && _this$options.widgetID) {
                 _context5.next = 5;
                 break;
               }
               logger.error('Invalid widgetID');
-              return _context5.abrupt("return");
+              return _context5.abrupt("return", false);
             case 5:
               _context5.next = 7;
               return this.loadUrl({}, (0, _query.fetchWidgetOptions)(this.options.widgetID));
@@ -567,12 +574,14 @@ var fluentcWidget = function () {
                 break;
               }
               logger.error('Failed fetching Widget Optons');
-              return _context5.abrupt("return");
+              return _context5.abrupt("return", false);
             case 11:
               this.config = config;
               _context5.next = 14;
               return this.getLanguages();
             case 14:
+              return _context5.abrupt("return", true);
+            case 15:
             case "end":
               return _context5.stop();
           }
@@ -628,7 +637,8 @@ var getAvailableLanguages = function getAvailableLanguages(environmentID) {
 };
 exports.getAvailableLanguages = getAvailableLanguages;
 var fetchWidgetOptions = function fetchWidgetOptions(widgetID) {
-  var query = (0, _graphqlTag.default)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    query{\n      fetchWidgetOptions(widgetID: \"", "\"){\n        environmentID\n        name\n        display\n        tags\n        sourceLanguage\n      }\n    }\n  "])), widgetID);
+  var host = window.location.href;
+  var query = (0, _graphqlTag.default)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    query{\n      fetchWidgetOptions(widgetID: \"", "\", host: \"", "\"){\n        environmentID\n        name\n        display\n        tags\n        sourceLanguage\n      }\n    }\n  "])), widgetID, host);
   return {
     query: (0, _graphql.print)(query),
     type: 'fetchWidgetOptions'
