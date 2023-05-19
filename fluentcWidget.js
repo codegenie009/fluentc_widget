@@ -407,7 +407,7 @@ var fluentcWidget = function () {
               return _context3.abrupt("return");
             case 26:
               _context3.next = 28;
-              return this.loadUrl({}, (0, _query.fluentcTranslate)(this.config.environmentID, this.config.sourceLanguage, language, labels));
+              return this.loadUrl({}, (0, _query.fluentcTranslate)(this.config.environmentID, this.config.sourceLanguage, language, this.config.autoTranslate, labels));
             case 28:
               translationRes = _context3.sent;
               data = translationRes === null || translationRes === void 0 ? void 0 : translationRes.body;
@@ -639,15 +639,15 @@ var getAvailableLanguages = function getAvailableLanguages(environmentID) {
 exports.getAvailableLanguages = getAvailableLanguages;
 var fetchWidgetOptions = function fetchWidgetOptions(widgetID) {
   var host = window.location.href;
-  var query = (0, _graphqlTag.default)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    query{\n      fetchWidgetOptions(widgetID: \"", "\", host: \"", "\"){\n        environmentID\n        name\n        display\n        tags\n        sourceLanguage\n      }\n    }\n  "])), widgetID, host);
+  var query = (0, _graphqlTag.default)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    query{\n      fetchWidgetOptions(widgetID: \"", "\", host: \"", "\"){\n        environmentID\n        name\n        display\n        tags\n        autoTranslate\n        sourceLanguage\n      }\n    }\n  "])), widgetID, host);
   return {
     query: (0, _graphql.print)(query),
     type: 'fetchWidgetOptions'
   };
 };
 exports.fetchWidgetOptions = fetchWidgetOptions;
-var fluentcTranslate = function fluentcTranslate(environmentID, sourceLanguage, targetLanguage, labels) {
-  var query = (0, _graphqlTag.default)(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    query{\n      translateWithEnvironment(environmentID:\"", "\", sourceLanguage:\"", "\", targetLanguage: \"", "\", labels: ", "){\n        body{\n          sourceLanguage\n          targetLanguage\n          originalText\n          translatedText\n        }\n      }\n    }\n  "])), environmentID, sourceLanguage, targetLanguage, JSON.stringify(labels));
+var fluentcTranslate = function fluentcTranslate(environmentID, sourceLanguage, targetLanguage, autoTranslate, labels) {
+  var query = (0, _graphqlTag.default)(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    query{\n      translateWithEnvironment(environmentID:\"", "\", sourceLanguage:\"", "\", targetLanguage: \"", "\", autoTranslate: ", ", labels: ", "){\n        body{\n          sourceLanguage\n          targetLanguage\n          originalText\n          translatedText\n        }\n      }\n    }\n  "])), environmentID, sourceLanguage, targetLanguage, autoTranslate, JSON.stringify(labels));
   return {
     query: (0, _graphql.print)(query),
     type: 'translateWithEnvironment'
@@ -786,7 +786,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-var forbiddenSelectors = ['script', 'style', 'pre', 'kbd', '._fluentc_widget-language-dropdown', '._fluentc_widget-language-manager', '._fluentc_widget-language-list'];
+var forbiddenSelectors = ['script', 'style', 'kbd', '._fluentc_widget-language-dropdown', '._fluentc_widget-language-manager', '._fluentc_widget-language-list'];
 var regexOnlyWhitespace = /^[\s]*$/;
 var regexOnlyDigitsWhiteSpacePunctuation = /^[\d\s!"#$%&'()*+,\-./:;<=>?@[\]^_`{|}~]*$/;
 var anyParentSatisfies = function anyParentSatisfies(node, filter) {
