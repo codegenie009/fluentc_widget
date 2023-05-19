@@ -181,6 +181,7 @@ var fluentcWidget = function () {
     });
     _defineProperty(this, "showOriginalText", function () {
       _this.language = _this.config.sourceLanguage;
+      _this.updateLanguageValues(_this.language);
       var _iterator3 = _createForOfIteratorHelper(_this.translatedData),
         _step3;
       try {
